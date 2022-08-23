@@ -258,9 +258,9 @@ namespace MySQL8_Launcher
             this.customMsg.ForeColor = System.Drawing.Color.DodgerBlue;
             this.customMsg.Location = new System.Drawing.Point(9, 263);
             this.customMsg.Name = "customMsg";
-            this.customMsg.Size = new System.Drawing.Size(187, 13);
+            this.customMsg.Size = new System.Drawing.Size(205, 13);
             this.customMsg.TabIndex = 3;
-            this.customMsg.Text = "Fixed && Customized by GMZekrom";
+            this.customMsg.Text = "Fixed && Customized by TheRakuSama";
             this.customMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // appTitle
