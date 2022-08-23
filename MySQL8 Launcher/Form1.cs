@@ -23,6 +23,7 @@ namespace MySQL8_Launcher
 
         private bool mouseDown;
         private Point lastLocation;
+        private bool mySQLRunning = false;
 
         public Form1() => this.InitializeComponent();
 
@@ -63,14 +64,15 @@ namespace MySQL8_Launcher
                 {
                     if (service.Status == ServiceControllerStatus.Running)
                     {
-                        this.txtLogs.AppendText("MySQL has been successfully started, username: root, password is empty, please set your own password!\r\n");
+                        this.txtLogs.AppendText("MySQL has been successfully started, username: root, password is *****, please set your own password!\r\n", Color.Lime);
+                        mySQLRunning = true;    // set mySQLRunning true if MySQL is started
                         return;
                     }
-                    this.txtLogs.AppendText("The MySQL8 service failed to start, please try to run this program as an administrator!\r\n");
+                    this.txtLogs.AppendText("The MySQL8 service failed to start, please try to run this program as an administrator!\r\n\n", Color.Red);
                     return;
                 }
             }
-            this.txtLogs.AppendText("MySQL8 service installation failed, please try to run this program as an administrator!\r\n");
+            this.txtLogs.AppendText("MySQL8 service installation failed, please try to run this program as an administrator!\r\n", Color.Yellow);
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
@@ -80,15 +82,20 @@ namespace MySQL8_Launcher
                 if (service.ServiceName == "mysql8")
                 {
                     this.RunCmd("net stop mysql8 && " + this.pathBin + "\\mysqld --remove mysql8");
+                    this.txtLogs.AppendText("\nMySQL has been successfully stopped!\r\n", Color.Lime);
+                    mySQLRunning = false;    // set mySQLRunning true if MySQL is started
                     return;
                 }
             }
-            this.txtLogs.AppendText("The MySQL8 service does not exist, please do not uninstall it repeatedly. \r\n");
+            this.txtLogs.AppendText("\nThe MySQL8 service does not exist, please do not uninstall it repeatedly. \r\n", Color.Yellow);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            if (mySQLRunning)
+                this.txtLogs.AppendText("\nPlease stop MySQL8 service first. \r\n", Color.Yellow);
+            else
+                Application.Exit();
         }
 
         private void btnMinimize_Click(object sender, EventArgs e)
